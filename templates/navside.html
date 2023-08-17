@@ -1,0 +1,44 @@
+{% load static %}
+
+<aside class="nav-aside">
+    <nav class="nav-box flow-content flex">
+        <div class="nav-logo logo">
+            <img class="nav-logo__img" src="{% static 'images/assets/logo.svg' %}" alt="logo (a blue bookmark icon)">
+            <h2 class="nav-logo__text">Attendr</h2>
+        </div>
+        <ul class="nav-list flex">
+            <li><a class="nav-list__link" href="{% url 'index' %}">
+                    <div class="nav-item flex">
+                        <img src="{% static 'images/assets/dashboard.svg' %}" alt="dashboard icon">
+                        <h3 class="nav-item__text">Dashboard</h3>
+                    </div>
+                </a></li>
+            <li><a class="nav-list__link" href="{% url 'classes' %}">
+                    <div class="nav-item flex">
+                        <img src="{% static 'images/assets/classes.svg' %}" alt="a book icon">
+                        <h3 class="nav-item__text">Classes</h3>
+                    </div>
+                </a></li>
+            <li><a class="nav-list__link" href="{% url 'timetable' %}">
+                    <div class="nav-item flex">
+                        <img src="{% static 'images/assets/timetable.svg' %}" alt="a calendar icon">
+                        <h3 class="nav-item__text">Timetable</h3>
+                    </div>
+                </a></li>
+        </ul>
+        <div class="nav-profile">
+            <div class="nav-profile__details flow-content">
+                <img class="nav-profile__img" src="{{profile.image.url}}">
+                <h6 class="nav-profile__name fw-bold">{{request.user.name}}</h6>
+                <p class="nav-profile__email clr-black-50">{{request.user.email}}</p>
+            </div>
+            <div class="nav-profile__buttons flow-content">
+                <a class="btn forward-btn nav-btn" href="{% url 'user' request.user.uid %}">Profile</a>
+                <a class="btn forward-btn nav-btn" href="{% url 'logout' %}">Logout</a>
+            </div>
+        </div>
+    </nav>
+</aside>
+<div class="nav-button"></div>
+
+<script src="{% static 'js/navaside.js' %}"></script>

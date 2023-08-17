@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="index-main">
+
+    <div class="index-hero flex">
+        <section class="index-primary flex">
+            <div class="index-logo flex">
+                <img class="index-logoimg" src="{% static 'images/assets/logo.svg' %}" alt="logo">
+                <h1 class="index-heading clr-accent fw-bold">Attendr</h1>
+            </div>
+            <div class="index-wrapper flex">
+                <p class="index-tagline fw-thin">Attendance made</p>
+                <ul class="index-tags">
+                    <li class="index-tag fw-thin"><span class="fw-medium">easy</span>.</li>
+                    <li class="index-tag fw-thin"><span class="fw-medium">simple</span>.</li>
+                    <li class="index-tag fw-thin"><span class="fw-medium">efficient</span>.</li>
+                </ul>
+            </div>
+            <a class="mtop-32 btn forward-btn" href="{% url 'register' %}">Get Started</a>
+        </section>
+        <section class="index-cta flex">
+            <p class="index-cta__quote index-cta__quote-left fw-medium clr-black-10">“</p>
+            <p class="index-cta__tag fw-light">Custom built for</p>
+            <img class="index-cta__logo" src="{% static 'images/assets/sicsr-logo.png' %}" alt="sicsr logo">
+            <p class="index-cta__quote index-cta__quote-right fw-medium clr-black-10">”</p>
+        </section>
+        <section class="index-info flex">
+            <div class="index-info__box flex">
+                <img class="index-info__img" src="{% static 'images/assets/index-left.svg' %}" alt="">
+                <p class="index-info__text clr-black-50">Attendr's ID card scanning streamlines attendance
+                    management by allowing faculty to quickly and accurately track attendance with a simple scan
+                    eliminating the need for manual attendance and saving time.</p>
+            </div>
+            <div class="index-info__box flex">
+                <p class="index-info__text clr-black-50">The timetable feature allows faculty and students to easily
+                    view their schedules in a convenient calendar format keeping them organized and on track with
+                    their classes and attendance.</p>
+                <img class="index-info__img" src="{% static 'images/assets/index-right.svg' %}" alt="">
+            </div>
+        </section>
+        <section class="index-footer flex">
+            <div class="index-footer-left">
+                <div class="index-footer__logo flex">
+                    <img class="index-footer__logo-img" src="{% static 'images/assets/logo.svg' %}" alt="logo">
+                    <p class="index-footer__logo-text h3 fw-bold clr-accent">Attendr</p>
+                </div>
+                <p class="index-footer__copyright clr-black-50">Copyright © 2023 Sachkeerat Singh</p>
+            </div>
+            <div class="index-footer__links flex">
+                <a class="link" href="{% url 'login' %}">Login</a>
+                <a class="link" href="{% url 'register' %}">Sign Up</a>
+            </div>
+        </section>
+    </div>
+
+</main>
+{% endblock content %}

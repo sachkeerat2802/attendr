@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="page-main">
+
+    {% include 'navside.html' %}
+
+    <div class="page-hero lecture-hero flow-content flex">
+        <div class="lecture-info flex">
+            <div class="lecture-info__details flex">
+                <h1 class="lecture__heading">Lecture No. {{lecture.no}}</h1>
+                <p class="h3 clr-black-50">{{class_obj.name}}</p>
+                <p class="h2">{{times.start}} - {{times.end}}</p>
+            </div>
+            {% if request.user.is_staff == True %}
+            <div class="lecture-info__btns flex">
+                <div class="btn-flex flex">
+                    <a class="lecture-del-btn btn backward-btn"
+                        href="{% url 'delete_lecture' class_obj.id lecture.no %}">Delete</a>
+                    <a href="{% url 'class' class_obj.id %}" class="btn backward-btn">Go Back</a>
+                </div>
+                <div class="btn-flex flex">
+                    <a class="btn forward-btn" href="{% url 'detect_attendance' class_obj.id lecture.no %}">Detect
+                        Attendance</a>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <button class="btn forward-btn" type="submit">Generate Report</button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="lecture-attendance">
+            <table class="lecture-table">
+                <thead>
+                    <tr class="lecture-table-head">
+                        <th class="lecture-table-head__value">Name</th>
+                        <th class="lecture-table-head__value">PRN</th>
+                        <th class="lecture-table-head__value">Value</th>
+                        {% if profile == class_obj.profile %}
+                        <th class="lecture-table-head__value">Edit</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in attendances %}
+                    <tr class="lecture-table-row">
+                        <td class="lecture-table-row__value">{{log.profile.name}}</td>
+                        <td class="lecture-table-row__value">{{log.profile.prn}}</td>
+                        <td class="lecture-table-row__value">{{log.value}}</td>
+                        {% if profile == class_obj.profile %}
+                        <td class="lecture-table-row__value"><a class="edit-lecture-link btn forward-btn"
+                                href="{% url 'edit_attendance' class_obj.id lecture.no log.profile.prn %}"><img
+                                    class="edit-lecture-btn" src="{% static 'images/assets/edit.png' %}"
+                                    alt="edit icon"></a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    <tr class="lecture-table-row">
+                        <td class="lecture-table-row__value"></td>
+                        <td class="lecture-table-row__value"></td>
+                        <td class="lecture-table-row__value"></td>
+                        {% if profile == class_obj.profile %}
+                        <td class="lecture-table-row__value"></td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+{% endblock content %}

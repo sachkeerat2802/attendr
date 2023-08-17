@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="page-main">
+
+    {% include 'navside.html' %}
+
+    <div class="page-hero dash-hero flow-content flex">
+        <div class="dash-welcome flex">
+            <div class="dash-name flow-content">
+                <h3 class="h4">Hello, <span class="clr-accent">{{name}}</span>!</h3>
+                <h1 class="h1">Dashboard</h1>
+            </div>
+            <form id="search_form">
+                {% csrf_token %}
+                <input class="dash-search" id="search_input" type="text" name="search_query" placeholder="Search"
+                    required />
+                <div class="search-results flow-content">
+                    <div id="user_results" class="user-results flow-content"></div>
+                    <div id="staff_results" class="staff-results flow-content"></div>
+                    <div id="class_results" class="class-results flow-content"></div>
+                </div>
+            </form>
+        </div>
+        <div class="dash-stats flex">
+            {% if request.user.is_staff != True %}
+            <div class="dash-statbox">
+                <p class="dash-statbox__title clr-accent fw-bold h6">Classes</p>
+                <p class="dash-statbox__data h6">{{user_stats.classes}}</p>
+            </div>
+            <div class="dash-statbox">
+                <p class="dash-statbox__title clr-accent fw-bold h6">Present</p>
+                <p class="dash-statbox__data h6">{{user_stats.present}}</p>
+            </div>
+            <div class="dash-statbox">
+                <p class="dash-statbox__title clr-accent fw-bold h6">Absent</p>
+                <p class="dash-statbox__data h6">{{user_stats.absent}}</p>
+            </div>
+            <div class="dash-statbox">
+                <p class="dash-statbox__title clr-accent fw-bold h6">Percentage</p>
+                <p class="dash-statbox__data h6">{{user_stats.percentage}}%</p>
+            </div>
+            {% else %}
+            <div class="dash-statbox">
+                <p class="dash-statbox__title clr-accent fw-bold h6">Classes</p>
+                <p class="dash-statbox__data h6">{{staff_stats.classes}}</p>
+            </div>
+            <div class="dash-statbox">
+                <p class="dash-statbox__title clr-accent fw-bold h6">Lectures</p>
+                <p class="dash-statbox__data h6">{{staff_stats.lectures}}</p>
+            </div>
+            <div class="dash-statbox">
+                <p class="dash-statbox__title clr-accent fw-bold h6">Students</p>
+                <p class="dash-statbox__data h6">{{staff_stats.students}}</p>
+            </div>
+            {% endif %}
+        </div>
+        <div class="dash-graph">
+            {% if request.user.is_staff != True %}
+            <canvas class="user-graph" id="dashGraph"></canvas>
+            {% else %}
+            <canvas class="staff-graph" id="dashGraph"></canvas>
+            {% endif %}
+        </div>
+        <div class="dash-table">
+            <table class="lecture-table">
+                {% if request.user.is_staff != True %}
+                <thead>
+                    <tr class="lecture-table-head">
+                        <th class="lecture-table-head__value">Name</th>
+                        <th class="lecture-table-head__value">Total</th>
+                        <th class="lecture-table-head__value">Present</th>
+                        <th class="lecture-table-head__value">Absent</th>
+                        <th class="lecture-table-head__value">Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in class_stats %}
+                    <tr class="lecture-table-row">
+                        <td class="lecture-table-row__value">{{obj.name}}</td>
+                        <td class="lecture-table-row__value">{{obj.total}}</td>
+                        <td class="lecture-table-row__value">{{obj.present}}</td>
+                        <td class="lecture-table-row__value">{{obj.absent}}</td>
+                        <td class="lecture-table-row__value">{{obj.percentage}}%</td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="lecture-table-row">
+                        <td class="lecture-table-row__value"></td>
+                        <td class="lecture-table-row__value"></td>
+                        <td class="lecture-table-row__value"></td>
+                        <td class="lecture-table-row__value"></td>
+                        <td class="lecture-table-row__value"></td>
+                    </tr>
+                </tbody>
+                {% else %}
+                <thead>
+                    <tr class="lecture-table-head">
+                        <th class="lecture-table-head__value">Name</th>
+                        <th class="lecture-table-head__value">Lectures</th>
+                        <th class="lecture-table-head__value">Students</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in class_stats %}
+                    <tr class="lecture-table-row">
+                        <td class="lecture-table-row__value">{{obj.name}}</td>
+                        <td class="lecture-table-row__value">{{obj.lectures}}</td>
+                        <td class="lecture-table-row__value">{{obj.students}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="lecture-table-row">
+                        <td class="lecture-table-row__value"></td>
+                        <td class="lecture-table-row__value"></td>
+                        <td class="lecture-table-row__value"></td>
+                    </tr>
+                </tbody>
+                {% endif %}
+            </table>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
+            crossorigin="anonymous"></script>
+        {% if request.user.is_staff != True %}
+        <script src="{% static 'js/userGraph.js' %}"></script>
+        {% else %}
+        <script src="{% static 'js/staffGraph.js' %}"></script>
+        {% endif %}
+        <script src="{% static 'js/search.js' %}"></script>
+    </div>
+
+</main>
+{% endblock content %}

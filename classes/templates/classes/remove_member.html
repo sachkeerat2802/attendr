@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="page-main">
+
+    {% include 'navside.html' %}
+
+    <div class="page-hero std-hero flow-content flex">
+        <h1 class="h2 fw-bold">Remove Member</h1>
+        <form class="std-form" action="{% url 'remove_member' class_obj.id profile.prn %}" method="POST">
+            {% csrf_token %}
+            <p class="clr-black-50">Are you sure you want to remove {{profile.name}} ({{profile.prn}}) from
+                {{class_obj.name}}?</p>
+            <div class="btn-flex flex">
+                <a class="btn backward-btn" href="{% url 'class' class_obj.id %}">Go Back</a>
+                <input class="btn forward-btn" type="submit" value="Confirm">
+            </div>
+        </form>
+    </div>
+
+</main>
+{% endblock content %}

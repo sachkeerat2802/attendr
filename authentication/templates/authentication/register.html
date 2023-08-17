@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="auth-main">
+
+    <div class="auth-hero register-hero flow-content flex">
+        <div class="register-hero__box flow-content">
+            <h1 class="h3 fw-bold">Create an account</h1>
+            <form action="{% url 'register' %}" method="POST" class="register-form flex flow-content">
+                {% csrf_token %}
+                {% for field in form %}
+                <div>
+                    <label class="field-label">{{field.label}}:</label>
+                    {{field}}
+                    {% for error in field.errors %}
+                    <p class="form-error">• {{error}}
+                    </p>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                <input type="submit" value="Sign Up" class="btn forward-btn login-btn">
+            </form>
+        </div>
+        <p>Already have an account? <a class="link" href="{% url 'login' %}">Log
+                In</a>
+        </p>
+    </div>
+
+    <aside class="auth-aside flow-content flex">
+        <div class="logo">
+            <img class="logo__img" src="{% static 'images/assets/logo.svg' %}" alt="logo (a blue bookmark icon)">
+            <h2 class="logo__text">Attendr</h2>
+        </div>
+        <img class="auth-aside__img" src="{% static 'images/assets/register_hero.svg' %}"
+            alt="a boy sitting on a table with his laptop">
+        <p class="h5 text-center">Designed to make attendance tracking attendance <span class="fw-bold">easy</span> and
+            <span class="fw-bold">efficient</span>.
+        </p>
+    </aside>
+
+</main>
+{% endblock content %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="page-main">
+
+    {% include 'navside.html' %}
+
+    <div class="page-hero timetable-hero flow-content">
+        <h1 class="h2 fw-bold">Time Table</h1>
+        <div class="timetable-content flex">
+            <div class="timetable-current flow-content">
+                <input class="btn timetable-date" type="date" name="day" id="date_obj" value="">
+                <div class="timetable-items"></div>
+            </div>
+            <div class="timetable-details flow-content">
+                <h3 class="h5 fw-medium">Tracked Classes:</h3>
+                <form class="timetable-track flex" action="{% url 'timetable' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="form-type" value="add-tt">
+                    <input class="registration-input" type="text" name="name" id="name">
+                    <input class="btn forward-btn" type="submit" value="Track">
+                </form>
+                <form class="timetable-classes flow-content" action="{% url 'timetable' %}" method="POST">
+                    {% csrf_token %}
+                    {% for class in classes %}
+                    <div class="timetable-class flex">
+                        <button class="btn tt-remove-btn" name="removed" value="{{class.name}}"></button>
+                        <p class="fw-bold">{{class.name}}</p>
+                    </div>
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+</main>
+<script src="{% static 'js/timetable.js' %}"></script>
+{% endblock content %}

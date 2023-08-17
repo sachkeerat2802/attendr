@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="page-main">
+
+    {% include 'navside.html' %}
+
+    <div class="page-hero class-hero flow-content flex">
+        <h1 class="h2 fw-bold">Classes</h1>
+        {% if request.user.is_staff == True %}
+        <a href="{% url 'create_class' %}" class="btn forward-btn">Create</a>
+        {% endif %}
+        {% if request.user.is_staff == True %}
+        <div class="class-list flex">
+            {% for obj in classes %}
+            <a class="class-link" href="{% url 'class' obj.id %}">
+                <div class="class-item flex">
+                    <img src="{{obj.image.url}}" class="class-item__img">
+                    <p>{{obj.name}}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="class-list flex">
+            {% for obj in classes %}
+            {% if profile in obj.users.all %}
+            <a class="class-link" href="{% url 'class' obj.id %}">
+                <div class="class-item flex">
+                    <img src="{{obj.image.url}}" class="class-item__img">
+                    <p>{{obj.name}}</p>
+                </div>
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+</main>
+{% endblock content %}

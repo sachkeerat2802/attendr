@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="auth-main">
+
+    <div class="auth-hero logout-hero flow-content flex">
+        <h1 class="h3 fw-bold">Logout</h1>
+        <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <p class="clr-black-50">Are you sure you want to continue?</p>
+            <div class="btn-flex flex">
+                <a class="btn backward-btn" href="{% url 'index' %}">Go Back</a>
+                <input class="btn forward-btn" type="submit" value="Confirm">
+            </div>
+        </form>
+    </div>
+
+    <aside class="auth-aside flow-content flex">
+        <div class="logo">
+            <img class="logo__img" src="{% static 'images/assets/logo.svg' %}" alt="logo (a blue bookmark icon)">
+            <h2 class="logo__text">Attendr</h2>
+        </div>
+        <img class="auth-aside__img" src="{% static 'images/assets/logout_hero.svg' %}"
+            alt="an illustration of a blonde woman sipping a drink while standing in her balcony">
+        <p class="h5 text-center">We’re <span class="fw-bold">sorry</span> to see you go!</p>
+    </aside>
+
+</main>
+{% endblock content %}

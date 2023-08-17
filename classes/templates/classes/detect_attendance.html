@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="page-main">
+
+    {% include 'navside.html' %}
+
+    <div class="page-hero std-hero flow-content flex">
+        <h1 class="h2 fw-bold">Detect Attendance</h1>
+        <video id="video" data-width="400" data-height="340" class="video detect-video" style="display: none"></video>
+        <button class="btn forward-btn" id="startWebCam">Start</button>
+        <button class="btn backward-btn" id="closeWebCam" style="display: none">Close</button>
+        <a href="{% url 'lecture' class_obj.id lecture.no %}" class="btn backward-btn">Go Back</a>
+        <script src="{% static 'js/detect_id.js' %}"></script>
+    </div>
+
+</main>
+{% endblock content %}

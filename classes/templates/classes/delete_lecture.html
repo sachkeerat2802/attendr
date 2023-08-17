@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main class="page-main">
+
+    {% include 'navside.html' %}
+
+    <div class="page-hero std-hero flow-content flex">
+        <h1 class="h2 fw-bold">Delete Lecture</h1>
+        <form class="std-form" action="{% url 'delete_lecture' class_obj.id lecture.no %}" method="POST">
+            {% csrf_token %}
+            <p class="clr-black-50">Are you sure you want to delete this lecture and all of its data?</p>
+            <div class="btn-flex flex">
+                <a class="btn backward-btn" href="{% url 'lecture' class_obj.id lecture.no %}">Go Back</a>
+                <input class="btn forward-btn" type="submit" value="Confirm">
+            </div>
+        </form>
+    </div>
+
+</main>
+{% endblock content %}

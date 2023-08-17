@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main class="auth-main">
+
+    <div class="auth-hero reset-hero flow-content flex">
+        <h1 class="h2 fw-bold">Set your password</h1>
+        <p class="reset-text clr-black-50">Please check your provided email for instructions to set your password and
+            login!</p>
+    </div>
+
+    <aside class="auth-aside flow-content flex">
+        <div class="logo">
+            <img class="logo__img" src="{% static 'images/assets/logo.svg' %}" alt="logo (a blue bookmark icon)">
+            <h2 class="logo__text">Attendr</h2>
+        </div>
+        <img class="auth-aside__img" src="{% static 'images/assets/checkmail_hero.svg' %}"
+            alt="an illustration of a blonde woman sipping a drink while standing in her balcony">
+    </aside>
+
+</main>
+
+{% endblock content %}

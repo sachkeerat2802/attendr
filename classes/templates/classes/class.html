@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="page-main">
+
+    {% include 'navside.html' %}
+
+    <div class="page-hero lecture-hero flow-content">
+        <div class="class-details flex">
+            <img class="class-img" src="{{class_obj.image.url}}">
+            <div class="class-details__hero flow-content">
+                <h1 class="class-details__name">{{class_obj.name}}</h1>
+                {% if profile == class_obj.profile %}
+                <div class="class-details__btns flex">
+                    <a class="btn backward-btn" href="{% url 'delete_class' class_obj.id %}">Delete</a>
+                    <a class="btn forward-btn" href="{% url 'edit_class' class_obj.id %}">Edit</a>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="form-type" value="generate-report">
+                        <button class="btn forward-btn" type="submit">Generate Report</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="class-info flex">
+            <div class="class-lectures flow-content flex">
+                <div class="class-lectures__hero flow-content">
+                    <p class="h4 fw-medium">Lectures: {{count.lectures}}</p>
+                    {% if profile == class_obj.profile %}
+                    <a class="btn forward-btn" href="{% url 'create_lecture' class_obj.id %}">Create Lecture</a>
+                    {% endif %}
+                </div>
+                <div class="class-lectures__list flow-content">
+                    {% for lecture in lectures %}
+                    <a class="lecture-link link" href="{% url 'lecture' class_obj.id lecture.no %}">
+                        <p class=""><span style="margin-right: 0.25rem;" class="fw-medium">{{lecture.no}}</span> : <span
+                                style="margin-right: 0.25rem; margin-left: 0.25rem; color: black;"
+                                class="fw-light">{{lecture.start_time}}</span> -
+                            <span style="margin-right: 0.25rem; margin-left: 0.25rem; color: black;"
+                                class="fw-light">{{lecture.end_time}}</span>
+                        </p>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="class-users flow-content flex">
+                <div class="class-users__hero flow-content">
+                    <p class="h4 fw-medium">Users: {{count.users}}</p>
+                    {% if profile == class_obj.profile %}
+                    <form class="class-adduser flex" action="{% url 'class' class_obj.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="form-type" value="add-member">
+                        <input class="registration-input" type="number" name="prn">
+                        <input class="btn forward-btn" type="submit" value="Add">
+                    </form>
+                    {% endif %}
+                </div>
+                <div class="class-users__table">
+                    <table class="lecture-table">
+                        <thead>
+                            <tr class="lecture-table-head">
+                                <th class="lecture-table-head__value">Name</th>
+                                <th class="lecture-table-head__value">PRN</th>
+                                {% if profile == class_obj.profile %}
+                                <th class="lecture-table-head__value">Remove</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in class_obj.users.all %}
+                            <tr class="lecture-table-row">
+                                <td class="lecture-table-row__value">{{user.name}}</td>
+                                <td class="lecture-table-row__value">{{user.prn}}</td>
+                                {% if profile == class_obj.profile %}
+                                <td class="lecture-table-row__value"><a class="edit-lecture-link btn backward-btn"
+                                        href="{% url 'remove_member' class_obj.id user.prn %}"><img
+                                            class="edit-lecture-btn" src="{% static 'images/assets/remove-user.png' %}"
+                                            alt="edit icon"></a></td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                            <tr class="lecture-table-row">
+                                <td class="lecture-table-row__value"></td>
+                                <td class="lecture-table-row__value"></td>
+                                {% if profile == class_obj.profile %}
+                                <td class="lecture-table-row__value"></td>
+                                {% endif %}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock content %}

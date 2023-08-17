@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    input {
+        display: block;
+        margin: 0;
+        padding: 0;
+        font-family: inherit;
+        border: 0;
+        padding: 1rem;
+        max-width: fit-content;
+        background-color: #f4eeee;
+        border-radius: var(--border-radius);
+        font-size: var(--fs-100);
+    }
+
+    input::placeholder {
+        color: #979797;
+        font-weight: var(--fw-medium);
+        font-size: var(--fs-100);
+    }
+</style>
+
+<main class="page-main">
+
+    {% include 'navside.html' %}
+
+    <div class="page-hero std-hero flow-content flex">
+        <h1 class="h2 fw-bold">Edit Class</h1>
+        <form class="std-form flow-content flex" action="{% url 'edit_class' class_obj.id %}" method="POST"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            <div>
+                <label class="field-label">{{field.label}}:</label>
+                {{field}}
+                {% for error in field.errors %}
+                <p class="form-error">• {{error}}</p>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <input class="btn forward-btn mtop-48" type="submit" value="Confirm">
+        </form>
+    </div>
+
+</main>
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="page-main">
+
+    {% include 'navside.html' %}
+
+    <div class="page-hero std-hero flow-content flex">
+        <h1 class="h2 fw-bold">Add User</h1>
+        <form class="std-form flow-content" action="{% url 'add_user' %}" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div>
+                <label class="field-label">{{field.label}}:</label>
+                {{field}}
+                {% for error in field.errors %}
+                <p class="form-error">• {{error}}
+                </p>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <input class="btn forward-btn mtop-48" type="submit" value="Add">
+        </form>
+    </div>
+
+</main>
+{% endblock content %}

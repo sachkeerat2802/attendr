@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="auth-main">
+
+    <div class="auth-hero login-hero flow-content flex">
+        <div class="login-hero__box flow-content">
+            <h1 class="h3 fw-bold">Welcome Back!</h1>
+            <form action="{% url 'login' %}" method="POST" class="login-form flex flow-content">
+                {% csrf_token %}
+                <label class="field-label">Email:</label>
+                <input class="registration-input" type="email" name="email" placeholder="sas2121155@sicsr.ac.in">
+                <label class="field-label">Password:</label>
+                <input class="registration-input" type="password" name="password" placeholder="• • • • • • • • • • • •">
+                <a class="login-forgotp-text link" href="{% url 'reset_password' %}">Forgot password?</a>
+                <input type="submit" value="Login" class="btn forward-btn login-btn">
+            </form>
+        </div>
+        <p>Don't have an account yet? <a class="link" href="{% url 'register' %}">Sign Up</a>
+        </p>
+    </div>
+
+    <aside class="auth-aside flow-content flex">
+        <div class="logo">
+            <img class="logo__img" src="{% static 'images/assets/logo.svg' %}" alt="logo (a blue bookmark icon)">
+            <h2 class="logo__text">Attendr</h2>
+        </div>
+        <img class="auth-aside__img" src="{% static 'images/assets/login_hero.svg' %}"
+            alt="an illustration of a woman sitting doing something on her laptop">
+        <p class="h5 text-center">An <span class="fw-bold">efficient</span> way of managing student attendance and
+            records</p>
+    </aside>
+
+</main>
+{% endblock content %}

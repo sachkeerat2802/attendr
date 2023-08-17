@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="page-main">
+
+    {% include 'navside.html' %}
+
+    <div class="page-hero user-hero flow-content">
+        <div class="user-banner">
+            <img class="user-banner__img" src="{{profile.image.url}}" alt="profile picture of the user">
+        </div>
+        <div class="user-profile flow-content">
+            <div class="user-namebox flex">
+                <h1 class="h2 fw-bold">{{profile.name}}</h1>
+                {% if profile.user == request.user %}
+                <div class="user-btns flex">
+                    <a class="btn forward-btn" href="{% url 'edit_user' request.user.uid %}">Edit</a>
+                    <a class="btn forward-btn" href="{% url 'password_change' %}">Change Password</a>
+                </div>
+                {% endif %}
+            </div>
+            <hr class="user-divider">
+            <div class="user-profile-box flex">
+                <p class="clr-black-50">{{profile.bio}}</p>
+                <div class="user-details flow-content">
+                    {% if user.is_staff == True %}
+                    <div class="user-details__item flex">
+                        <label class="field-label">Employee No:</label>
+                        <p class="registration-input">{{profile.empno}}</p>
+                    </div>
+                    {% else %}
+                    <div class="user-details__item flex">
+                        <label class="field-label">PRN:</label>
+                        <p class="registration-input">{{profile.prn}}</p>
+                    </div>
+                    <div class="user-details__item flex">
+                        <label class="field-label">Course:</label>
+                        <p class="registration-input">{{profile.course}}</p>
+                    </div>
+                    {% endif %}
+                    <div class="user-details__item flex">
+                        <label class="field-label">Email:</label>
+                        <p class="registration-input">{{profile.email}}</p>
+                    </div>
+                    <div class="user-details__item flex">
+                        <label class="field-label">Phone:</label>
+                        <p class="registration-input">{{profile.phone}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock content %}
