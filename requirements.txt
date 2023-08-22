@@ -1,0 +1,10 @@
+beautifulsoup4==4.11.1
+Django==4.0.6
+django_environ==0.10.0
+djangorestframework==3.14.0
+numpy==1.24.1
+opencv_python==4.7.0.68
+pytesseract==0.3.10
+pyzbar==0.1.9
+Requests==2.31.0
+XlsxWriter==3.0.8
